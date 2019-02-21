@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Awesome Store | Product Catalog</title>
+        <style>
+            body {
+                width: 90%;
+                max-width: 1024px;
+                margin: 0 auto;
+                background-color: lightgoldenrodyellow;
+            }
+
+            .product-catalog {
+                width: 100%;
+            }
+
+            .product-catalog, .product-catalog th, .product-catalog td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            .product-catalog th, .product-catalog td {
+                padding: 10px;
+            }
+
+            .product-image {
+                width: 32px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Awesome Store</h1>
+        <hr />
+        <h2>Product Catalog</h2>
+        <table class="product-catalog">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody id="products-table-body"></tbody>
+        </table>
+
+        <script>
+            fetch( `http://localhost:3000/products` )
+                .then( response => response.json() )
+                .then( products => {
+                    document.getElementById( 'products-table-body' ).innerHTML = products.map( product => `
+                        <tr>
+                            <td><img src="${product.imageUrl}" class="product-image" /></td>
+                            <td>${product.name}</td>
+                            <td>${product.description}</td>
+                            <td>${product.price}</td>
+                            <td>${product.starRating}</td>
+                        </tr>
+                    `).join('');
+                });
+        </script>
+    </body>
+</html>
